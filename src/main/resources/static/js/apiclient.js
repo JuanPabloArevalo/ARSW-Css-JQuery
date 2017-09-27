@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-apiclient=(function(){
+var apiclient=(function(){
 
 	return {
 		getBlueprintsByAuthor:function(authname,callback){

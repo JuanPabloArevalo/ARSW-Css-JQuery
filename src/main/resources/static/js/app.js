@@ -5,7 +5,7 @@
  */
 
 
-app = (function(){
+var app = (function(){
     var nombreAutorSeleccionado;
     var planos = [];
     var nombrePlanoSeleccionado;

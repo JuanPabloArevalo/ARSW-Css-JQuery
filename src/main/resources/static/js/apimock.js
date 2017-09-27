@@ -6,7 +6,7 @@
 
 //@author hcadavid
 
-apimock=(function(){
+var apimock=(function(){
 
 	var mockdata=[];
         mockdata["juanPablo"]=[
