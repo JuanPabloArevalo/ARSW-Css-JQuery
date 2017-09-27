@@ -1,0 +1,46 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25/09/2017, 10:37:41 PM
+    Author     : JuanArevaloMerchan
+*/
+
+#idTitulo{
+    font-family: verdana ;
+    font-size: 4.5rem;
+    font-style: normal;
+    color:#2573ec;
+    margin-left:1vw;
+}
+
+.textoBasico{
+    font-family: verdana ;
+    font-size: 3rem;
+    margin-left:1vw;
+    margin-right:1vw;
+}
+
+#autorABuscar{
+    margin-right:2vw;
+}
+
+body{
+     margin-left:3vw;
+}
+
+.margen2{
+     margin-left:2vw;
+}
+
+#myCanvas{
+    border:1px solid #000000;
+    width: 40vw;
+}
+
+.negrilla{
+    font-weight: bold;
+}
+

@@ -1,0 +1,7 @@
+Autores: Stefany Morón y Juan Pablo Arévalo.
+
+    1. Qué condiciones de carrera se podrían presentar?
+	La condición de carrera se presetna cuando dos o más clientes realizan la petición PUT que acceden al mismo recurso (blueprints/author/name), es decir, ambos estarían accedendo y modificando el mismo recurso, por lo tanto se presentarian inconsistencias a la hora de almacenar los recursos.
+
+    2. Cuales son las respectivas regiones críticas?
+	La región crítica se encuentra en BlueprintAPIController, en el método: manejadorPostRecursoCambiarPlano, pues este es el encargado de relizar la peticion PUT, que crea o modifica un plano de un autor y nombre especifico.
