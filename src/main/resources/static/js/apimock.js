@@ -19,7 +19,8 @@ apimock=(function(){
             {author:"johnconnor","points":[{"x":150,"y":120},{"x":215,"y":115}],"name":"house"},
             {author:"johnconnor","points":[{"x":340,"y":240},{"x":15,"y":215}],"name":"gear"},
             {author:"johnconnor","points":[{"x":44,"y":55},{"x":77,"y":88}, {"x":20,"y":100}, {"x":27,"y":15}, {"x":42,"y":57}],"name":"miCasa"},
-            {author:"johnconnor","points":[{"x":4,"y":2},{"x":8,"y":12}, {"x":21,"y":32}, {"x":77,"y":7}, {"x":10,"y":11}],"name":"miOficina"}
+            {author:"johnconnor","points":[{"x":4,"y":2},{"x":8,"y":12}, {"x":21,"y":32}, {"x":77,"y":7}, {"x":10,"y":11}],"name":"miOficina"},
+            {author:"johnconnor","points":[{"x":5,"y":5},{"x":10,"y":20}, {"x":20,"y":40}, {"x":14,"y":80}, {"x":17,"y":80}, {"x":24,"y":85}, {"x":190,"y":130}, {"x":85,"y":150}, {"x":12,"y":21}],"name":"miLote"}
         ];
 	mockdata["maryweyland"]=[
             {author:"maryweyland","points":[{"x":140,"y":140},{"x":115,"y":115}],"name":"house2"},
