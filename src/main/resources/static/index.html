@@ -18,7 +18,7 @@ and open the template in the editor.
             <script src="js/app.js"></script>
             <link rel="stylesheet" href="style.css" />
     </head>
-    <body id="idFondo">
+    <body id="idFondo" onLoad="app.init()">
         <div class="container-fluid">
             <div class="row">
                 <h1 id="idTitulo">BluePrints</h1>
@@ -57,10 +57,14 @@ and open the template in the editor.
                     </div>
 
                     <div class="col-md-6">
+                        <button type="button" id="botonGetBluePrint" class="btn btn-primary" onclick="">Create new blueprints</button>
                         <h2 id='autorSeleccionado'>Current blueprint: <span id='idMapaDibujado' class="textoBasico negrilla"></span></h2>
                         <div id="canvas">
                             <canvas id="myCanvas"></canvas> 
                         </div>
+                        <button type="button" id="botonGetBluePrint" class="btn btn-success" onclick="">Save/Update</button>
+                        <button type="button" id="botonGetBluePrint" class="btn btn-danger" onclick="">Delate</button>
+                        
                     </div>
                 </div>
             <div class="row">

@@ -11,6 +11,8 @@ var app = (function(){
     var nombrePlanoSeleccionado;
     var ctx;
     var tipo = apimock;
+    var puntosTemporales = [];
+    var puedeModificarCanvas = "N";
     
     changeNombreAutorSeleccionado = function(){
         nombreAutorSeleccionado = $('#autorABuscar').val();     
@@ -37,18 +39,61 @@ var app = (function(){
         actualizarPlano:function(nombrePlano){
             nombrePlanoSeleccionado=nombrePlano;
             tipo.getBlueprintsByNameAndAuthor(nombreAutorSeleccionado, nombrePlanoSeleccionado, function(lbp){
-                actualizarNombrePlanoDom(nombrePlanoSeleccionado);  
+                actualizarNombrePlanoDom(nombrePlanoSeleccionado); 
+                puedeModificarCanvas = "S";
+                puntosTemporales = [];
                 ctx = inicializarPlano();
-                lbp.points.map(dibujarMapa);
+                puntosTemporales = lbp.points;
+                console.info(puntosTemporales);
+                puntosTemporales.map(dibujarMapa);
                 ctx.stroke(); 
                 }
             );
-        } 
+        }, 
+        getPuntosTemporales:function(){
+          return puntosTemporales;  
+        },
+        init:function(){
+            //if PointerEvent is suppported by the browser:
+            if(window.PointerEvent) {
+                canvas.addEventListener("pointerdown", function(event){
+                    if(puedeModificarCanvas==="S"){
+                        alert('pointerdown at '+event.pageX+','+event.pageY); 
+                        puntosTemporales = adicionarPunto(puntosTemporales,(event.pageX-$("#myCanvas").offset().left), (event.pageY-$("#myCanvas").offset().top));
+                        console.info(puntosTemporales);
+                        ctx = inicializarPlano();
+                        puntosTemporales.map(dibujarMapa);
+                        ctx.stroke(); 
+                    }
+                });
+            }
+            else {
+                canvas.addEventListener("mousedown", function(event){
+                    if(puedeModificarCanvas==="S"){
+                        
+                        alert('mousedown at '+(event.clientX-$("#myCanvas").offset().left)+','+(event.clientY-$("#myCanvas").offset().top)); 
+                        console.info("LEFT:"+$("#myCanvas").offset().left);
+                        console.info("X:"+event.clientX);
+                        puntosTemporales = adicionarPunto(puntosTemporales,(event.clientX-$("#myCanvas").offset().left), (event.clientY-$("#myCanvas").offset().top));
+                        console.info(puntosTemporales);
+                        ctx = inicializarPlano();
+                        puntosTemporales.map(dibujarMapa);
+                        ctx.stroke(); 
+                    }
+                 }
+            , true);
+            }
+        }
     };
 })();
 
 function transformarMapa(item) {
     return {nombre:item.name, cantidadPuntos:item.points.length};
+}
+
+function adicionarPunto(puntosTemporales, x, y){
+    puntosTemporales.push({"x":x,"y":y});
+    return puntosTemporales;
 }
 
 function inicializarElementos(){
@@ -58,7 +103,7 @@ function inicializarElementos(){
 }
 
 function adicionarFila(item){
-    var markup = "<tr class=\"filas\"><td>" + item.nombre + "</td><td>" + item.cantidadPuntos + "</td><td><button type=\"button\" class=\"btn btn-success\" onclick=\"app.actualizarPlano('"+item.nombre+"')\">Open</button></td></tr>";
+    var markup = "<tr class=\"filas\"><td>" + item.nombre + "</td><td>" + item.cantidadPuntos + "</td><td><button type=\"button\" class=\"btn btn-info\" onclick=\"app.actualizarPlano('"+item.nombre+"')\">Open</button></td></tr>";
     $("table tbody").append(markup);
 }
 
@@ -69,7 +114,9 @@ function calcularTotalPuntos(previousValue, currentValue){
 function actualizarAutorDom(autorSeleccionado){
     document.getElementById("autorSeleccionado").innerHTML = autorSeleccionado+"' blueprints";
 }
-
+function traerPuntos(item){
+    return item;
+}
 function actualizarTotalPuntosDom(totalPuntos){
     document.getElementById("totalPuntosCalculados").innerHTML = totalPuntos;
 }
