@@ -21,6 +21,7 @@ and open the template in the editor.
     font-size: 3rem;
     margin-left:1vw;
     margin-right:1vw;
+     color:#2573ec;
 }
 
 #autorABuscar{
@@ -44,3 +45,8 @@ body{
     font-weight: bold;
 }
 
+#idFondo{
+  	background-image: url("/images.jpg");
+  	padding-left:1vw;
+  	
+}
