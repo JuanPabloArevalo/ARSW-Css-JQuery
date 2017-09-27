@@ -10,6 +10,8 @@ app = (function(){
     var planos = [];
     var nombrePlanoSeleccionado;
     var ctx;
+    var tipo = apimock;
+    
     changeNombreAutorSeleccionado = function(){
         nombreAutorSeleccionado = $('#autorABuscar').val();     
     } ;
@@ -17,7 +19,7 @@ app = (function(){
     return{
         actualizarInformacion:function(){
             changeNombreAutorSeleccionado();
-            apiclient.getBlueprintsByAuthor(nombreAutorSeleccionado, function(lbp){ 
+            tipo.getBlueprintsByAuthor(nombreAutorSeleccionado, function(lbp){ 
                     planos = lbp.map(transformarMapa); 
                     inicializarElementos();
                     planos.map(adicionarFila);  
@@ -34,7 +36,7 @@ app = (function(){
         },
         actualizarPlano:function(nombrePlano){
             nombrePlanoSeleccionado=nombrePlano;
-            apiclient.getBlueprintsByNameAndAuthor(nombreAutorSeleccionado, nombrePlanoSeleccionado, function(lbp){
+            tipo.getBlueprintsByNameAndAuthor(nombreAutorSeleccionado, nombrePlanoSeleccionado, function(lbp){
                 actualizarNombrePlanoDom(nombrePlanoSeleccionado);  
                 ctx = inicializarPlano();
                 lbp.points.map(dibujarMapa);
