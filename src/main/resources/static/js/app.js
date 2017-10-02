@@ -12,6 +12,7 @@ var app = (function(){
     var tipo = apiclient;
     var puntosTemporales = [];
     var puedeModificarCanvas = "N";
+    var estaModificando = "N";
     
     changeNombreAutorSeleccionado = function(){
         nombreAutorSeleccionado = $('#autorABuscar').val();     
@@ -26,6 +27,7 @@ var app = (function(){
                     planos.map(adicionarFila);  
                     actualizarTotalPuntosDom(sumarPuntos(planos)); 
                     actualizarAutorDom(nombreAutorSeleccionado);
+                    $("#idDivAdicionarPlano").hide(); 
                 } 
             );            
         },
@@ -37,15 +39,20 @@ var app = (function(){
             tipo.getBlueprintsByNameAndAuthor(nombreAutorSeleccionado, nombrePlanoSeleccionado, function(lbp){
                 actualizarNombrePlanoDom(nombrePlanoSeleccionado); 
                 puedeModificarCanvas = "S";
+                estaModificando = "S";
                 inicializarPlano();
                 puntosTemporales = lbp.points;
                 puntosTemporales.map(dibujarMapa);
+                $("#idDivAdicionarPlano").hide(); 
                 }
             );
         },
-        crearNuevoPlano:function(){
-             document.getElementById("idDivAdicionarPlano").style.visibility = 'visible'; 
-             app.inicializarPlano();
+        addNewBluePrint: function(){
+             $("#idDivAdicionarPlano").show(); 
+             $("#idMapaDibujado").text("");
+             inicializarPlano();
+             puedeModificarCanvas = "S";
+             estaModificando = "N";
         },
         init:function(){
             var canvas = document.getElementById("myCanvas");
@@ -76,16 +83,21 @@ var app = (function(){
             );
             }
         },
-        modificarPuntosYCargarDatos:function(){
-            let promesaPut = tipo.setBluePrintByNameAndAuthor(nombreAutorSeleccionado,nombrePlanoSeleccionado,puntosTemporales);
-            promesaPut.then(
-                function(){
-                     app.actualizarInformacion();
-                },
-                function(){
-                    alert("Ha ocurrido un error");
-                }
-            );
+        modificarOCrear:function(){
+            if(estaModificando==="S"){
+                let promesaPut = tipo.setBluePrintByNameAndAuthor(nombreAutorSeleccionado,nombrePlanoSeleccionado,puntosTemporales);
+                promesaPut.then(
+                    function(){
+                         app.actualizarInformacion();
+                    },
+                    function(){
+                        alert("Ha ocurrido un error");
+                    }
+                );
+            }
+            else{
+                
+            }
          }
     };
 })();
@@ -101,8 +113,8 @@ function adicionarPunto(puntosTemporales, x, y){
 
 function inicializarElementos(){
     $(".filas").remove("tr");
-    document.getElementById("totalPuntosCalculados").innerHTML = "";
-    document.getElementById("autorSeleccionado").innerHTML = "";
+    $("#totalPuntosCalculados").text("");
+    $("#autorSeleccionado").text("");
 }
 
 function adicionarFila(item){
@@ -115,13 +127,13 @@ function calcularTotalPuntos(previousValue, currentValue){
 }
 
 function actualizarAutorDom(autorSeleccionado){
-    document.getElementById("autorSeleccionado").innerHTML = autorSeleccionado+"' blueprints";
+    $("#autorSeleccionado").text(autorSeleccionado+"' blueprints");
 }
 function actualizarTotalPuntosDom(totalPuntos){
-    document.getElementById("totalPuntosCalculados").innerHTML = totalPuntos;
+    $("#totalPuntosCalculados").text(totalPuntos);
 }
 function actualizarNombrePlanoDom(nombrePlano){
-    document.getElementById("idMapaDibujado").innerHTML = nombrePlano;
+    $("#idMapaDibujado").text(nombrePlano);
 }
 function sumarPuntos(planos){
     return (planos.map( function(item){return item.cantidadPuntos})).reduce(calcularTotalPuntos);    

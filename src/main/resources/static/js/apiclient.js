@@ -22,6 +22,10 @@ var apiclient=(function(){
                             contentType: "application/json"
                         });
                         
+                },
+                addNewBluePrint:function(authname,bpname,points, callback){
+                    $.post("demo_ajax_gethint.asp", {suggest: txt}, callback)
+                    
                 }
                 
 	};	

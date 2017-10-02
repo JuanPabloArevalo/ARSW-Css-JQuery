@@ -42,7 +42,7 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
         Blueprint bpSt=new Blueprint("Stefany", "PlanosDeMiCasa",ptsSt);
         blueprints.put(new Tuple<>(bpSt.getAuthor(),bpSt.getName()), bpSt);
         
-        Point[] ptsSt2=new Point[]{new Point(50, 1),new Point(1, 05)};
+        Point[] ptsSt2=new Point[]{new Point(50, 32),new Point(1, 42)};
         Blueprint bpSt2=new Blueprint("Stefany", "PlanoDeMiAlcobo",ptsSt2);
         blueprints.put(new Tuple<>(bpSt2.getAuthor(),bpSt2.getName()), bpSt2);
         
