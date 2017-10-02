@@ -42,7 +42,7 @@ public class BlueprintAPIController {
             return new ResponseEntity<>(bp.getBlueprintsByAuthor(nombreAutor),HttpStatus.ACCEPTED);
         } catch (BlueprintNotFoundException ex) {
             Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity<>("Error en el manejadorGetRecursoBlueprint",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No existen planos con el autor: "+nombreAutor,HttpStatus.NOT_FOUND);
         }        
     }
     

@@ -21,7 +21,7 @@ var app = (function(){
     return{
         actualizarInformacion:function(){
             changeNombreAutorSeleccionado();
-            tipo.getBlueprintsByAuthor(nombreAutorSeleccionado, function(lbp){ 
+            let promesa = tipo.getBlueprintsByAuthor(nombreAutorSeleccionado, function(lbp){ 
                     planos = lbp.map(transformarMapa); 
                     inicializarElementos();
                     planos.map(adicionarFila);  
@@ -30,7 +30,8 @@ var app = (function(){
                     $("#idDivAdicionarPlano").hide(); 
                     puedeCrearNuevoPlano = "S";
                 } 
-            );            
+            ); 
+            promesa.then(function(){},function(){alert("Ha el siguiente error: "+promesa.responseText);});
         },
         actualizarNombreAutor: function(){
               document.getElementById("autorSeleccionado").innerHTML = nombreAutorSeleccionado+"' blueprints";
@@ -52,7 +53,7 @@ var app = (function(){
             if(puedeCrearNuevoPlano==="S"){
                 $("#idDivAdicionarPlano").show(); 
                 $("#idMapaDibujado").text("");
-                $("#idNombrePlano").val("")
+                $("#idNombrePlano").val("");
                 inicializarPlano();
                 puedeModificarCanvas = "S";
                 estaModificando = "N";
@@ -101,7 +102,7 @@ var app = (function(){
                          $("#idMapaDibujado").text("");
                     },
                     function(){
-                        alert("Ha el siguiente error: "+promesaPost.responseText);
+                        alert("Ha ocurrido el siguiente error: "+promesaPost.responseText);
                     }
                 );
             }
@@ -114,7 +115,7 @@ var app = (function(){
                          inicializarPlano();
                     },
                     function(){
-                        alert("Ha el siguiente error: "+promesaPost.responseText);
+                        alert("Ha ocurrido el siguiente error: "+promesaPost.responseText);
                     }
                 );
             }
@@ -123,12 +124,14 @@ var app = (function(){
             let promesaDelete = tipo.deleteBluePrint(nombreAutorSeleccionado,nombrePlanoSeleccionado,puntosTemporales);
                 promesaDelete.then(
                     function(){
+                        inicializarPlano();
+                        inicializarElementos();
                          app.actualizarInformacion();
-                         inicializarPlano();
+                         
                          $("#idMapaDibujado").text("");
                     },
                     function(){
-                        alert("Ha el siguiente error: "+promesaDelete.responseText);
+                        alert("Ha ocurrido el siguiente error: "+promesaDelete.responseText);
                     }
                 );
         },
