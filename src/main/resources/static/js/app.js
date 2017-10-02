@@ -13,11 +13,11 @@ var app = (function(){
     var puntosTemporales = [];
     var puedeModificarCanvas = "N";
     var estaModificando = "N";
+    var puedeCrearNuevoPlano = "N";
     
     changeNombreAutorSeleccionado = function(){
         nombreAutorSeleccionado = $('#autorABuscar').val();     
     } ;
-   
     return{
         actualizarInformacion:function(){
             changeNombreAutorSeleccionado();
@@ -28,6 +28,7 @@ var app = (function(){
                     actualizarTotalPuntosDom(sumarPuntos(planos)); 
                     actualizarAutorDom(nombreAutorSeleccionado);
                     $("#idDivAdicionarPlano").hide(); 
+                    puedeCrearNuevoPlano = "S";
                 } 
             );            
         },
@@ -48,11 +49,18 @@ var app = (function(){
             );
         },
         addNewBluePrint: function(){
-             $("#idDivAdicionarPlano").show(); 
-             $("#idMapaDibujado").text("");
-             inicializarPlano();
-             puedeModificarCanvas = "S";
-             estaModificando = "N";
+            if(puedeCrearNuevoPlano==="S"){
+                $("#idDivAdicionarPlano").show(); 
+                $("#idMapaDibujado").text("");
+                $("#idNombrePlano").val("")
+                inicializarPlano();
+                puedeModificarCanvas = "S";
+                estaModificando = "N";
+                puntosTemporales = [];
+            }
+            else{
+                alert("No ha seleccionado ningun autor");
+            }    
         },
         init:function(){
             var canvas = document.getElementById("myCanvas");
@@ -89,15 +97,43 @@ var app = (function(){
                 promesaPut.then(
                     function(){
                          app.actualizarInformacion();
+                         inicializarPlano();
+                         $("#idMapaDibujado").text("");
                     },
                     function(){
-                        alert("Ha ocurrido un error");
+                        alert("Ha el siguiente error: "+promesaPost.responseText);
                     }
                 );
             }
             else{
-                
+                app.asignarNombrePlanoNuevo();
+                let promesaPost = tipo.addNewBluePrint(nombreAutorSeleccionado,nombrePlanoSeleccionado,puntosTemporales);
+                promesaPost.then(
+                    function(){
+                         app.actualizarInformacion();
+                         inicializarPlano();
+                    },
+                    function(){
+                        alert("Ha el siguiente error: "+promesaPost.responseText);
+                    }
+                );
             }
+         },
+        deleteBluePrint:function(){
+            let promesaDelete = tipo.deleteBluePrint(nombreAutorSeleccionado,nombrePlanoSeleccionado,puntosTemporales);
+                promesaDelete.then(
+                    function(){
+                         app.actualizarInformacion();
+                         inicializarPlano();
+                         $("#idMapaDibujado").text("");
+                    },
+                    function(){
+                        alert("Ha el siguiente error: "+promesaDelete.responseText);
+                    }
+                );
+        },
+         asignarNombrePlanoNuevo:function(){
+             nombrePlanoSeleccionado = $('#idNombrePlano').val();   
          }
     };
 })();

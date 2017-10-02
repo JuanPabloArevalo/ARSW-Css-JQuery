@@ -61,19 +61,14 @@ and open the template in the editor.
                         <h2 id='autorSeleccionado'>Current blueprint: <span id='idMapaDibujado' class="textoBasico negrilla"></span></h2>
                         <div id="idDivAdicionarPlano" hidden>
                             <label>Nombre Plano:</label>
-                        <input type="text" id="idNombrePlano">
+                            <input type="text" id="idNombrePlano">
                         </div>
                         <div id="canvas">
                             <canvas id="myCanvas" width="500" height="300"></canvas> 
                         </div>
                         <button type="button" id="botonGetBluePrint" class="btn btn-success" onclick="app.modificarOCrear()">Save/Update</button>
-                        <button type="button" id="botonGetBluePrint" class="btn btn-danger" onclick="">Delate</button>
-                        
+                        <button type="button" id="botonGetBluePrint" class="btn btn-danger" onclick="app.deleteBluePrint()">Delate</button>
                     </div>
-                </div>
-            <div class="row">
-                <div>
-                   
                 </div>
             </div>
         </div>

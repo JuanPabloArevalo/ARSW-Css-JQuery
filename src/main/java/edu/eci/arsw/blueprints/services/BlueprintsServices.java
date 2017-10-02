@@ -7,15 +7,11 @@ package edu.eci.arsw.blueprints.services;
 
 import edu.eci.arsw.blueprints.filtroInter.Filtro;
 import edu.eci.arsw.blueprints.model.Blueprint;
-import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
-import edu.eci.arsw.blueprints.persistence.impl.Tuple;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -112,4 +108,13 @@ public class BlueprintsServices {
         return planosFiltrados;
     }
     
+    
+     /**
+     * Metodo encargado de eliminar el  BluePrint
+     * @param author
+     * @param name
+     */
+    public void deleteBlueprint(String author, String name){
+        bpp.deleteBluePrint(author, name);
+    }
 }

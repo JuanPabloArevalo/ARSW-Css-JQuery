@@ -78,5 +78,13 @@ public class BlueprintAPIController {
             return new ResponseEntity<>(ex.getMessage(),HttpStatus.FORBIDDEN);
         }
     }
+    
+    @RequestMapping(path = "/{author}/{name}", method = RequestMethod.DELETE)	
+    public ResponseEntity<?> manejadorDeleteEliminarPlano(@PathVariable ("author") String author, @PathVariable ("name") String name){
+        bp.deleteBlueprint(author,name);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+        
+        
+    }
 }
 
