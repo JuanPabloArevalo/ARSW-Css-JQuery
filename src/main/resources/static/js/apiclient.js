@@ -13,7 +13,17 @@ var apiclient=(function(){
 
 		getBlueprintsByNameAndAuthor:function(authname,bpname,callback){
 			$.get("/blueprints/"+authname+"/"+bpname,callback); 
-		}
+		},
+                setBluePrintByNameAndAuthor:function(authname,bpname,points){
+                        return $.ajax({
+                            url: "/blueprints/"+authname+"/"+bpname,
+                            type: 'PUT',
+                            data: '{"author":"'+authname+'","name":"'+bpname+'", "points":'+JSON.stringify(points)+'}',
+                            contentType: "application/json"
+                        });
+                        
+                }
+                
 	};	
 
 })();

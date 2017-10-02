@@ -9,8 +9,7 @@ var app = (function(){
     var nombreAutorSeleccionado;
     var planos = [];
     var nombrePlanoSeleccionado;
-    var ctx;
-    var tipo = apimock;
+    var tipo = apiclient;
     var puntosTemporales = [];
     var puedeModificarCanvas = "N";
     
@@ -30,28 +29,23 @@ var app = (function(){
                 } 
             );            
         },
-        getCtx:function(){
-            return ctx;
-        },
-        actualizarNombreAutor: function(autorSeleccionado){
-              document.getElementById("autorSeleccionado").innerHTML = autorSeleccionado+"' blueprints";
+        actualizarNombreAutor: function(){
+              document.getElementById("autorSeleccionado").innerHTML = nombreAutorSeleccionado+"' blueprints";
         },
         actualizarPlano:function(nombrePlano){
             nombrePlanoSeleccionado=nombrePlano;
             tipo.getBlueprintsByNameAndAuthor(nombreAutorSeleccionado, nombrePlanoSeleccionado, function(lbp){
                 actualizarNombrePlanoDom(nombrePlanoSeleccionado); 
                 puedeModificarCanvas = "S";
-                puntosTemporales = [];
                 inicializarPlano();
-                console.info("lbp.points: "+lbp.points);
-                console.info(lbp.points);
                 puntosTemporales = lbp.points;
                 puntosTemporales.map(dibujarMapa);
                 }
             );
-        }, 
-        getPuntosTemporales:function(){
-          return puntosTemporales;  
+        },
+        crearNuevoPlano:function(){
+             document.getElementById("idDivAdicionarPlano").style.visibility = 'visible'; 
+             app.inicializarPlano();
         },
         init:function(){
             var canvas = document.getElementById("myCanvas");
@@ -77,12 +71,22 @@ var app = (function(){
                         inicializarPlano();
                         puntosTemporales = adicionarPunto(puntosTemporales,puntoX, puntoY);
                         puntosTemporales.map(dibujarMapa); 
-                        console.info(puntosTemporales);
                     }
                  }
-            , true);
+            );
             }
-        }
+        },
+        modificarPuntosYCargarDatos:function(){
+            let promesaPut = tipo.setBluePrintByNameAndAuthor(nombreAutorSeleccionado,nombrePlanoSeleccionado,puntosTemporales);
+            promesaPut.then(
+                function(){
+                     app.actualizarInformacion();
+                },
+                function(){
+                    alert("Ha ocurrido un error");
+                }
+            );
+         }
     };
 })();
 
@@ -112,9 +116,6 @@ function calcularTotalPuntos(previousValue, currentValue){
 
 function actualizarAutorDom(autorSeleccionado){
     document.getElementById("autorSeleccionado").innerHTML = autorSeleccionado+"' blueprints";
-}
-function traerPuntos(item){
-    return item;
 }
 function actualizarTotalPuntosDom(totalPuntos){
     document.getElementById("totalPuntosCalculados").innerHTML = totalPuntos;

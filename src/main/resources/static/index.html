@@ -56,13 +56,17 @@ and open the template in the editor.
                         </div>
                     </div>
 
-                    <div class="col-md-6" id =aaa">
-                        <button type="button" id="botonGetBluePrint" class="btn btn-primary" onclick="">Create new blueprints</button>
+                    <div class="col-md-6">
+                        <button type="button" id="botonGetBluePrint" class="btn btn-primary" onclick="app.crearNuevoPlano()">Create new blueprints</button>
                         <h2 id='autorSeleccionado'>Current blueprint: <span id='idMapaDibujado' class="textoBasico negrilla"></span></h2>
+                        <div id="idDivAdicionarPlano" hidden>
+                            <label>Nombre Plano:</label>
+                        <input type="text" id="idNombrePlano">
+                        </div>
                         <div id="canvas">
                             <canvas id="myCanvas" width="500" height="300"></canvas> 
                         </div>
-                        <button type="button" id="botonGetBluePrint" class="btn btn-success" onclick="">Save/Update</button>
+                        <button type="button" id="botonGetBluePrint" class="btn btn-success" onclick="app.modificarPuntosYCargarDatos()">Save/Update</button>
                         <button type="button" id="botonGetBluePrint" class="btn btn-danger" onclick="">Delate</button>
                         
                     </div>

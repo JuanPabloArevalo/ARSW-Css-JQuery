@@ -58,7 +58,6 @@ public class BlueprintAPIController {
     
     @RequestMapping(method = RequestMethod.POST)	
     public ResponseEntity<?> manejadorPostRecursoAdicionarPlano(@RequestBody Blueprint newBp){
-        
         try {
             bp.addNewBlueprint(newBp);
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -71,7 +70,6 @@ public class BlueprintAPIController {
     
     @RequestMapping(path = "/{author}/{name}",method = RequestMethod.PUT)	
     public ResponseEntity<?> manejadorPostRecursoCambiarPlano(@PathVariable ("author") String author, @PathVariable ("name") String name, @RequestBody Blueprint newBp ){
-        
         try {
             bp.modifyOrAddBlueprint(newBp, author, name);
             return new ResponseEntity<>(HttpStatus.CREATED);
