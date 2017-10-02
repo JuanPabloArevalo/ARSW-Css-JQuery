@@ -42,11 +42,9 @@ var app = (function(){
                 actualizarNombrePlanoDom(nombrePlanoSeleccionado); 
                 puedeModificarCanvas = "S";
                 puntosTemporales = [];
-                ctx = inicializarPlano();
+                inicializarPlano();
                 puntosTemporales = lbp.points;
-                console.info(puntosTemporales);
                 puntosTemporales.map(dibujarMapa);
-                ctx.stroke(); 
                 }
             );
         }, 
@@ -54,31 +52,30 @@ var app = (function(){
           return puntosTemporales;  
         },
         init:function(){
+            var canvas = document.getElementById("myCanvas");
             //if PointerEvent is suppported by the browser:
             if(window.PointerEvent) {
                 canvas.addEventListener("pointerdown", function(event){
                     if(puedeModificarCanvas==="S"){
-                        alert('pointerdown at '+event.pageX+','+event.pageY); 
-                        puntosTemporales = adicionarPunto(puntosTemporales,(event.pageX-$("#myCanvas").offset().left), (event.pageY-$("#myCanvas").offset().top));
-                        console.info(puntosTemporales);
-                        ctx = inicializarPlano();
-                        puntosTemporales.map(dibujarMapa);
-                        ctx.stroke(); 
+                        let rect = document.getElementById("myCanvas").getBoundingClientRect();
+                        let puntoX = parseInt(event.clientX - rect.left);
+                        let puntoY = parseInt(event.clientY - rect.top);                        
+                        inicializarPlano();
+                        puntosTemporales = adicionarPunto(puntosTemporales,puntoX, puntoY);
+                        puntosTemporales.map(dibujarMapa); 
                     }
                 });
             }
             else {
                 canvas.addEventListener("mousedown", function(event){
                     if(puedeModificarCanvas==="S"){
-                        
-                        alert('mousedown at '+(event.clientX-$("#myCanvas").offset().left)+','+(event.clientY-$("#myCanvas").offset().top)); 
-                        console.info("LEFT:"+$("#myCanvas").offset().left);
-                        console.info("X:"+event.clientX);
-                        puntosTemporales = adicionarPunto(puntosTemporales,(event.clientX-$("#myCanvas").offset().left), (event.clientY-$("#myCanvas").offset().top));
+                        let rect = document.getElementById("myCanvas").getBoundingClientRect();
+                        let puntoX = parseInt(event.clientX - rect.left);
+                        let puntoY = parseInt(event.clientY - rect.top);                        
+                        inicializarPlano();
+                        puntosTemporales = adicionarPunto(puntosTemporales,puntoX, puntoY);
+                        puntosTemporales.map(dibujarMapa); 
                         console.info(puntosTemporales);
-                        ctx = inicializarPlano();
-                        puntosTemporales.map(dibujarMapa);
-                        ctx.stroke(); 
                     }
                  }
             , true);
@@ -136,8 +133,9 @@ function inicializarPlano(){
     ctx.fillRect(0,0,document.getElementById("myCanvas").width,document.getElementById("myCanvas").height);
     ctx.stroke();
     ctx.moveTo(0,0);
-    return ctx;
 }
 function dibujarMapa(item){
-    app.getCtx().lineTo(item.x, item.y);
+    var ctx = document.getElementById("myCanvas").getContext("2d");
+    ctx.lineTo(item.x, item.y);
+    ctx.stroke();
 }
