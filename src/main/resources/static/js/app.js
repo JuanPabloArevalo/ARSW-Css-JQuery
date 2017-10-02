@@ -43,6 +43,8 @@ var app = (function(){
                 puedeModificarCanvas = "S";
                 puntosTemporales = [];
                 inicializarPlano();
+                console.info("lbp.points: "+lbp.points);
+                console.info(lbp.points);
                 puntosTemporales = lbp.points;
                 puntosTemporales.map(dibujarMapa);
                 }
